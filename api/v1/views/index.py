@@ -20,3 +20,16 @@ def check_status():
     Status of API
     """
     return jsonify({"status": "OK"})
+
+
+@app_views.route('/stats', methods=['GET'], strict_slashes=False)
+def obj_count():
+    """
+    An endpoint that retrieves the number of each objects by type
+    """
+    objects = {"amenities": 'Amenity', "cities": 'City', "places": 'Place',
+               "reviews": 'Review', "states": 'State', "users": 'User'}
+
+    for key, value in objects.items():
+        objects[key] = storage.count(value)
+    return jsonify(objects)
